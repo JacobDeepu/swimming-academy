@@ -62,17 +62,29 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role)
     {
         $this->authorize('update a role');
+
+        $permissions = Permission::all();
+        $role_has_permissions = array_column(json_decode($role->permissions, true), 'id');
+        return view('admin.role.edit', compact('role', 'permissions', 'role_has_permissions'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Role $role)
     {
         $this->authorize('update a role');
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        $role->update($validated);
+        $permissions = $request->permissions ?? [];
+        $role->syncPermissions($permissions);
+        return redirect()->route('role.index');
     }
 
     /**
