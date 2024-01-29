@@ -13,6 +13,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $this->authorize('view a role');
+
         $roles = Role::latest();
         $roles = $roles->paginate(5);
         return view('admin.role.index', compact('roles'));
@@ -23,7 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create a role');
     }
 
     /**
@@ -31,7 +33,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create a role');
     }
 
     /**
@@ -39,7 +41,7 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $this->authorize('view a role');
     }
 
     /**
@@ -47,7 +49,7 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $this->authorize('update a role');
     }
 
     /**
@@ -55,7 +57,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->authorize('update a role');
     }
 
     /**
@@ -63,6 +65,6 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->authorize('delete a role');
     }
 }
