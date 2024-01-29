@@ -2,7 +2,7 @@
 
 @php
 $classes = ($active ?? false)
-            ? 'group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 focus:outline-none border-l-4 border-transparent border-primary-500 bg-gray-50'
+            ? 'group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 focus:outline-none border-l-4 border-primary-500 bg-gray-50'
             : 'group flex items-center rounded-lg p-2 text-base font-medium text-gray-500 focus:outline-none border-l-4 border-transparent hover:border-primary-500 hover:bg-gray-50';
 $icon_classes = ($active ?? false)
                 ? 'h-6 w-6 text-gray-900 transition duration-75'
