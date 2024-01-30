@@ -13,10 +13,8 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $arrayOfPermissionNames = [
-            'view a role',
-            'create a role',
-            'update a role',
-            'delete a role'
+            'view a role', 'create a role', 'update a role', 'delete a role',
+            'view a user', 'create a user', 'update a user', 'delete a user',
         ];
         $permissions = collect($arrayOfPermissionNames)->map(function ($permission) {
             return ['name' => $permission, 'guard_name' => 'web'];
