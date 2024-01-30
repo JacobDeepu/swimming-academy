@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -26,6 +29,9 @@ class UserController extends Controller
     public function create()
     {
         $this->authorize('create a user');
+
+        $roles = Role::all();
+        return view('admin.user.create', compact('roles'));
     }
 
     /**
@@ -34,6 +40,23 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create a user');
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        if (!empty($request->roles)) {
+            $user->assignRole($request->roles);
+        }
+        return redirect()->route('user.index');
     }
 
     /**
