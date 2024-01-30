@@ -33,6 +33,7 @@
                     <thead class="bg-gray-50 text-xs uppercase text-gray-700">
                         <tr>
                             <th class="px-4 py-3" scope="col">user name</th>
+                            <th class="px-4 py-3" scope="col">email</th>
                             @canany(['edit a user', 'delete a user'])
                                 <th class="px-4 py-3" scope="col">Actions</th>
                             @endcanany
@@ -42,6 +43,7 @@
                         @forelse ($users as $user)
                             <tr class="border-b">
                                 <th class="whitespace-nowrap px-4 py-3 font-medium text-gray-900" scope="row">{{ $user->name }}</th>
+                                <td class="px-4 py-3">{{ $user->email }}</td>
                                 @can('edit a user')
                                     <td class="flex items-center px-4 py-3">
                                         <x-link class="border border-primary-700 text-primary-700 hover:text-primary-800" href="{{ route('user.edit', $user) }}">
