@@ -73,6 +73,10 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $this->authorize('update a user');
+
+        $roles = Role::all();
+        $user_has_roles = array_column(json_decode($user->roles, true), 'id');
+        return view('admin.user.edit', compact('user', 'roles', 'user_has_roles'));
     }
 
     /**
@@ -81,6 +85,25 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $this->authorize('update a user');
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', Rules\Password::defaults()],
+        ]);
+
+        $user->update([
+            'name' => $request['name'],
+            'email' => $request['email'],
+        ]);
+        if ($request->password) {
+            $user->update([
+                'password' => Hash::make($request['password']),
+            ]);
+        }
+        $roles = $request->roles ?? [];
+        $user->syncRoles($roles);
+        return redirect()->route('user.index');
     }
 
     /**
