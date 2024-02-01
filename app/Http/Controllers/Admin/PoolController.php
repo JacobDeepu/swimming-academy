@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\PoolRequest;
 use App\Models\Pool;
-use Illuminate\Http\Request;
 
 class PoolController extends Controller
 {
@@ -34,9 +34,13 @@ class PoolController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PoolRequest $request)
     {
-        //
+        $this->authorize('create a pool');
+
+        Pool::create($request->validated());
+
+        return redirect()->route('pool.index');
     }
 
     /**
@@ -58,7 +62,7 @@ class PoolController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pool $pool)
+    public function update(PoolRequest $request, Pool $pool)
     {
         //
     }
