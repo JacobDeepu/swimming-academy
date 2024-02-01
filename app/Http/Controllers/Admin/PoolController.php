@@ -78,6 +78,10 @@ class PoolController extends Controller
      */
     public function destroy(Pool $pool)
     {
-        //
+        $this->authorize('delete a pool');
+
+        $pool->delete();
+
+        return redirect()->route('pool.index');
     }
 }
