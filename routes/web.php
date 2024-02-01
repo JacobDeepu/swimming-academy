@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PoolController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('role', RoleController::class);
     Route::resource('user', UserController::class);
+    Route::resource('pool', PoolController::class);
 });
 
 require __DIR__.'/auth.php';
