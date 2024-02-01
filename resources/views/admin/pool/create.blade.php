@@ -15,7 +15,7 @@
                         </div>
                         <div class="sm:col-span-2">
                             <x-input-label for="description" value="{{ __('Description') }}" />
-                            <x-textarea class="mt-1 block w-full" id="description" name="description" :value="old('description')" />
+                            <x-textarea class="mt-1 block w-full" id="description" name="description">{{ old('description') }}</x-textarea>
                         </div>
                     </div>
                     <div class="mt-4 flex">
