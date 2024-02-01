@@ -20,6 +20,7 @@ class RoleController extends Controller
 
         $roles = Role::latest();
         $roles = $roles->paginate(5);
+
         return view('admin.role.index', compact('roles'));
     }
 
@@ -31,6 +32,7 @@ class RoleController extends Controller
         $this->authorize('create a role');
 
         $permissions = Permission::all();
+
         return view('admin.role.create', compact('permissions'));
     }
 
@@ -47,9 +49,10 @@ class RoleController extends Controller
 
         $role = Role::create($validated);
 
-        if (!empty($request->permissions)) {
+        if (! empty($request->permissions)) {
             $role->givePermissionTo($request->permissions);
         }
+
         return redirect()->route('role.index');
     }
 
@@ -70,6 +73,7 @@ class RoleController extends Controller
 
         $permissions = Permission::all();
         $role_has_permissions = array_column(json_decode($role->permissions, true), 'id');
+
         return view('admin.role.edit', compact('role', 'permissions', 'role_has_permissions'));
     }
 
@@ -86,6 +90,7 @@ class RoleController extends Controller
         $role->update($validated);
         $permissions = $request->permissions ?? [];
         $role->syncPermissions($permissions);
+
         return redirect()->route('role.index');
     }
 
@@ -97,6 +102,7 @@ class RoleController extends Controller
         $this->authorize('delete a role');
 
         $role->delete();
+
         return redirect()->route('role.index');
     }
 }

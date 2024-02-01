@@ -20,6 +20,7 @@ class UserController extends Controller
 
         $users = User::latest();
         $users = $users->paginate(5);
+
         return view('admin.user.index', compact('users'));
     }
 
@@ -31,6 +32,7 @@ class UserController extends Controller
         $this->authorize('create a user');
 
         $roles = Role::all();
+
         return view('admin.user.create', compact('roles'));
     }
 
@@ -43,7 +45,7 @@ class UserController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
@@ -53,9 +55,10 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if (!empty($request->roles)) {
+        if (! empty($request->roles)) {
             $user->assignRole($request->roles);
         }
+
         return redirect()->route('user.index');
     }
 
@@ -76,6 +79,7 @@ class UserController extends Controller
 
         $roles = Role::all();
         $user_has_roles = array_column(json_decode($user->roles, true), 'id');
+
         return view('admin.user.edit', compact('user', 'roles', 'user_has_roles'));
     }
 
@@ -88,7 +92,7 @@ class UserController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', Rules\Password::defaults()],
         ]);
 
@@ -103,6 +107,7 @@ class UserController extends Controller
         }
         $roles = $request->roles ?? [];
         $user->syncRoles($roles);
+
         return redirect()->route('user.index');
     }
 
@@ -114,6 +119,7 @@ class UserController extends Controller
         $this->authorize('delete a user');
 
         $user->delete();
+
         return redirect()->route('user.index');
     }
 }

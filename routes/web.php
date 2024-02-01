@@ -35,4 +35,4 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('user', UserController::class);
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
