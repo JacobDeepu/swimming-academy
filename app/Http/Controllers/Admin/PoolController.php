@@ -13,7 +13,12 @@ class PoolController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('view a pool');
+
+        $pools = Pool::latest();
+        $pools = $pools->paginate(5);
+
+        return view('admin.pool.index', compact('pools'));
     }
 
     /**
@@ -21,7 +26,9 @@ class PoolController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create a pool');
+
+        return view('admin.pool.create');
     }
 
     /**
