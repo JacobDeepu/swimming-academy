@@ -56,7 +56,9 @@ class PoolController extends Controller
      */
     public function edit(Pool $pool)
     {
-        //
+        $this->authorize('update a pool');
+
+        return view('admin.pool.edit', compact('pool'));
     }
 
     /**
@@ -64,7 +66,11 @@ class PoolController extends Controller
      */
     public function update(PoolRequest $request, Pool $pool)
     {
-        //
+        $this->authorize('update a pool');
+
+        $pool->update($request->validated());
+
+        return redirect()->route('pool.index');
     }
 
     /**
