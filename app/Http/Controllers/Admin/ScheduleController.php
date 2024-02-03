@@ -61,17 +61,28 @@ class ScheduleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Schedule $schedule)
+    public function edit(Schedule $schedule): View
     {
         $this->authorize('update a schedule');
+
+        $days = Day::all();
+        $schedule_has_days = array_column(json_decode($schedule->days, true), 'id');
+
+        return view('admin.schedule.edit', compact('schedule', 'days', 'schedule_has_days'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ScheduleRequest $request, Schedule $schedule)
+    public function update(ScheduleRequest $request, Schedule $schedule): RedirectResponse
     {
         $this->authorize('update a schedule');
+
+        $schedule->update($request->validated());
+        $days = $request->days ?? [];
+        $schedule->days()->sync($days);
+
+        return redirect()->route('schedule.index');
     }
 
     /**
