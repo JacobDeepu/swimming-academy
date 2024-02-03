@@ -22,7 +22,9 @@ class ScheduleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'start_time' => ['required', 'string', 'max:255'],
+            'end_time' => ['required', 'string', 'max:255'],
+            'status' => ['required'],
         ];
     }
 }
