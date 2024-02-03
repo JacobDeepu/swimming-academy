@@ -18,7 +18,7 @@ class ScheduleController extends Controller
     {
         $this->authorize('view a schedule');
 
-        $schedules = Schedule::latest();
+        $schedules = Schedule::where('status', 1)->latest();
         $schedules = $schedules->paginate(5);
 
         return view('admin.schedule.index', compact('schedules'));
@@ -91,5 +91,9 @@ class ScheduleController extends Controller
     public function destroy(Schedule $schedule)
     {
         $this->authorize('delete a schedule');
+
+        $schedule->update(['status' => 0]);
+
+        return redirect()->route('schedule.index');
     }
 }
