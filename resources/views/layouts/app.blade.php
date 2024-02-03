@@ -17,24 +17,23 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
-
+            @php
+                $uris = explode('.', request()->route()->getName());
+            @endphp
             <main class="h-auto p-4 pt-20 md:ml-64">
                 <div class="flex justify-between sm:px-6 lg:px-8">
                     <!-- Page Heading -->
                     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                        {{ __('Dashboard') }}
+                        {{ Str::ucfirst($uris[0]) }}
                     </h2>
                     <!-- Page Breadcrumb -->
                     <div class="flex">
                         <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
                             <li class="inline-flex items-center">
                                 <a class="inline-flex items-center text-sm font-medium text-primary-700 hover:text-blue-600" href="{{ route('dashboard') }}">
-                                    Home
+                                    {{ __('Home') }}
                                 </a>
                             </li>
-                            @php
-                                $uris = explode('/', request()->route()->uri);
-                            @endphp
                             @foreach ($uris as $uri)
                                 @if ($loop->last)
                                     <li aria-current="page">
