@@ -17,6 +17,7 @@ class PermissionSeeder extends Seeder
             'view a user', 'create a user', 'update a user', 'delete a user',
             'view a pool', 'create a pool', 'update a pool', 'delete a pool',
             'view a schedule', 'create a schedule', 'update a schedule', 'delete a schedule',
+            'view a batch', 'create a batch', 'update a batch', 'delete a batch',
         ];
         $permissions = collect($arrayOfPermissionNames)->map(function ($permission) {
             return ['name' => $permission, 'guard_name' => 'web'];
