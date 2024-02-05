@@ -5,15 +5,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BatchRequest;
 use App\Models\Batch;
+use Illuminate\View\View;
 
 class BatchController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         $this->authorize('view a batch');
+
+        $batches = Batch::latest();
+        $batches = $batches->paginate(5);
+
+        return view('admin.batch.index', compact('batches'));
     }
 
     /**
