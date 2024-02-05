@@ -26,6 +26,7 @@ return new class extends Migration
             $table->foreignId('pool_id')
                 ->cascadeOnDelete()
                 ->constrained();
+            $table->boolean('status');
             $table->timestamps();
         });
     }

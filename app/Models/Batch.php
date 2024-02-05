@@ -23,6 +23,7 @@ class Batch extends Model
         'schedule_id',
         'instructor_id',
         'pool_id',
+        'status',
     ];
 
     /**
