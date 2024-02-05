@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BatchController;
 use App\Http\Controllers\Admin\PoolController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ScheduleController;
@@ -37,6 +38,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('pool', PoolController::class);
     Route::resource('schedule', ScheduleController::class);
+    Route::resource('batch', BatchController::class);
 });
 
 require __DIR__.'/auth.php';
