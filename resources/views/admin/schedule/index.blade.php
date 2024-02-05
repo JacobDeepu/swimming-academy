@@ -81,7 +81,9 @@
                     </tbody>
                 </table>
             </div>
-            {{ $schedules->appends(request()->query())->links() }}
+            <div class="p-2">
+                {{ $schedules->appends(request()->query())->links('components.paginator') }}
+            </div>
         </div>
     </div>
 </x-app-layout>

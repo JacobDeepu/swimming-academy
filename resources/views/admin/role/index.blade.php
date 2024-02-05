@@ -79,7 +79,9 @@
                     </tbody>
                 </table>
             </div>
-            {{ $roles->appends(request()->query())->links() }}
+            <div class="p-2">
+                {{ $roles->appends(request()->query())->links('components.paginator') }}
+            </div>
         </div>
     </div>
 </x-app-layout>

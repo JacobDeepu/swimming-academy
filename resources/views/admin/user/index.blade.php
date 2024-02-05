@@ -81,7 +81,9 @@
                     </tbody>
                 </table>
             </div>
-            {{ $users->appends(request()->query())->links() }}
+            <div class="p-2">
+                {{ $users->appends(request()->query())->links('components.paginator') }}
+            </div>
         </div>
     </div>
 </x-app-layout>
