@@ -14,6 +14,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         Role::create(['name' => 'Super Admin']);
+        Role::create(['name' => 'Instructor']);
+        Role::create(['name' => 'Student']);
 
         $user = User::factory()->create([
             'email' => 'superadmin@admin.com',
@@ -21,5 +23,6 @@ class UserSeeder extends Seeder
         ]);
 
         $user->assignRole('Super Admin');
+
     }
 }
