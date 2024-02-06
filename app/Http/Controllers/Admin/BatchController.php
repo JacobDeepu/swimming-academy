@@ -81,7 +81,7 @@ class BatchController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(BatchRequest $request, Batch $batch):RedirectResponse
+    public function update(BatchRequest $request, Batch $batch): RedirectResponse
     {
         $this->authorize('update a batch');
 
@@ -96,5 +96,9 @@ class BatchController extends Controller
     public function destroy(Batch $batch)
     {
         $this->authorize('delete a batch');
+
+        $batch->update(['status' => 0]);
+
+        return redirect()->route('batch.index');
     }
 }
