@@ -65,17 +65,29 @@ class BatchController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Batch $batch)
+    public function edit(Batch $batch): View
     {
         $this->authorize('update a batch');
+
+        $schedules = Schedule::get();
+
+        $instructors = User::role('Instructor')->get();
+
+        $pools = Pool::get();
+
+        return view('admin.batch.edit', compact('batch', 'schedules', 'instructors', 'pools'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(BatchRequest $request, Batch $batch)
+    public function update(BatchRequest $request, Batch $batch):RedirectResponse
     {
         $this->authorize('update a batch');
+
+        $batch->update($request->validated());
+
+        return redirect()->route('batch.index');
     }
 
     /**
