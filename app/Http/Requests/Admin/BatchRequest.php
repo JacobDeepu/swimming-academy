@@ -22,7 +22,14 @@ class BatchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'level' => ['required', 'string', 'max:255'],
+            'capacity_min' => ['required', 'numeric'],
+            'capacity_max' => ['required', 'numeric'],
+            'schedule_id' => ['required'],
+            'instructor_id' => ['required'],
+            'pool_id' => ['required'],
+            'status' => ['required'],
         ];
     }
 }

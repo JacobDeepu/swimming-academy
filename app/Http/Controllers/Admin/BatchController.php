@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BatchRequest;
 use App\Models\Batch;
+use App\Models\Pool;
+use App\Models\Schedule;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class BatchController extends Controller
@@ -25,17 +29,29 @@ class BatchController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         $this->authorize('create a batch');
+
+        $schedules = Schedule::get();
+
+        $instructors = User::role('Instructor')->get();
+
+        $pools = Pool::get();
+
+        return view('admin.batch.create', compact('schedules', 'instructors', 'pools'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BatchRequest $request)
+    public function store(BatchRequest $request): RedirectResponse
     {
         $this->authorize('create a batch');
+
+        Batch::create($request->validated());
+
+        return redirect()->route('batch.index');
     }
 
     /**
