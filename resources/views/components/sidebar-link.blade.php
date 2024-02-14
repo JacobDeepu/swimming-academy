@@ -1,17 +1,17 @@
 @props(['active'])
 
 @php
-$classes = ($active ?? false)
-            ? 'group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 focus:outline-none border-l-4 border-primary-500 bg-gray-50'
-            : 'group flex items-center rounded-lg p-2 text-base font-medium text-gray-500 focus:outline-none border-l-4 border-transparent hover:border-primary-500 hover:bg-gray-50';
-$icon_classes = ($active ?? false)
-                ? 'h-6 w-6 text-gray-900 transition duration-75'
-                : 'h-6 w-6 text-gray-500 transition duration-75'
+    $classes = 'inline-flex w-full items-center text-sm font-semibold transition-colors duration-150 hover:text-gray-800';
+    $classes = $active ? $classes . ' text-gray-800 hover:text-gray-800' : $classes;
 @endphp
 
+@if ($active)
+    <span class="absolute inset-y-0 left-0 w-1 rounded-br-lg rounded-tr-lg bg-primary-600" aria-hidden="true"></span>
+@endif
+
 <a {{ $attributes->merge(['class' => $classes]) }}>
-    <svg class='{{ $icon_classes }}' aria-hidden="true" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+    <svg class="h-5 w-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
         {{ $icon }}
     </svg>
-    <span class="ml-3">{{ $slot }}</span>
+    <span class="ml-4">{{ $slot }}</span>
 </a>
