@@ -14,55 +14,60 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-            @php
-                $uris = explode('.', request()->route()->getName());
-            @endphp
-            <main class="h-auto p-4 pt-20 md:ml-64">
-                <div class="flex justify-between sm:px-6 lg:px-8">
-                    <!-- Page Heading -->
-                    <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                        {{ Str::ucfirst($uris[0]) }}
-                    </h2>
-                    <!-- Page Breadcrumb -->
-                    <div class="flex">
-                        <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
-                            <li class="inline-flex items-center">
-                                <a class="inline-flex items-center text-sm font-medium text-primary-700 hover:text-blue-600" href="{{ route('dashboard') }}">
-                                    {{ __('Home') }}
-                                </a>
-                            </li>
-                            @foreach ($uris as $uri)
-                                @if ($loop->last)
-                                    <li aria-current="page">
-                                        <div class="flex items-center">
-                                            <svg class="mx-1 h-3 w-3 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                                            </svg>
-                                            <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2">{{ Str::ucfirst($uri) }}</span>
-                                        </div>
-                                    </li>
-                                @else
-                                    <li aria-current="page">
-                                        <div class="flex items-center">
-                                            <svg class="mx-1 h-3 w-3 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                                            </svg>
-                                            <span class="ms-1 text-sm font-medium text-primary-500 md:ms-2">{{ Str::ucfirst($uri) }}</span>
-                                        </div>
-                                    </li>
-                                @endif
-                            @endforeach
-                        </ol>
+    <body class="font-sans antialiased" x-data="{ isSidebarOpen: false }">
+        <div class="flex h-screen min-h-screen bg-gray-100" :class="{ 'overflow-hidden': isSidebarOpen }">
+            <!-- Sidebar -->
+            @include('layouts.sidebar')
+            <div class="flex w-full flex-1 flex-col">
+                <!-- Header -->
+                @include('layouts.header')
+                <main class="h-auto h-full overflow-y-auto p-4">
+                    @php
+                        $uris = explode('.', request()->route()->getName());
+                    @endphp
+                    <div class="flex justify-between sm:px-6 lg:px-8">
+                        <!-- Page Heading -->
+                        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+                            {{ Str::ucfirst($uris[0]) }}
+                        </h2>
+                        <!-- Page Breadcrumb -->
+                        <div class="flex">
+                            <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
+                                <li class="inline-flex items-center">
+                                    <a class="inline-flex items-center text-sm font-medium text-primary-700 hover:text-blue-600" href="{{ route('dashboard') }}">
+                                        {{ __('Home') }}
+                                    </a>
+                                </li>
+                                @foreach ($uris as $uri)
+                                    @if ($loop->last)
+                                        <li aria-current="page">
+                                            <div class="flex items-center">
+                                                <svg class="mx-1 h-3 w-3 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+                                                </svg>
+                                                <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2">{{ Str::ucfirst($uri) }}</span>
+                                            </div>
+                                        </li>
+                                    @else
+                                        <li aria-current="page">
+                                            <div class="flex items-center">
+                                                <svg class="mx-1 h-3 w-3 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+                                                </svg>
+                                                <span class="ms-1 text-sm font-medium text-primary-500 md:ms-2">{{ Str::ucfirst($uri) }}</span>
+                                            </div>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ol>
+                        </div>
                     </div>
-                </div>
-                <!-- Page Content -->
-                <div class="py-6">
-                    {{ $slot }}
-                <div>
-            </main>
+                    <!-- Page Content -->
+                    <div class="py-6">
+                        {{ $slot }}
+                    <div>
+                </main>
+            </div>
         </div>
     </body>
 </html>
